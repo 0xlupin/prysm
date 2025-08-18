@@ -191,6 +191,9 @@ func TestGetSpec(t *testing.T) {
 	var daap [4]byte
 	copy(daap[:], []byte{'0', '0', '0', '7'})
 	config.DomainAggregateAndProof = daap
+	var dptc [4]byte
+	copy(dptc[:], []byte{'0', '0', '0', '8'})
+	config.DomainPTCAttester = dptc
 	var dam [4]byte
 	copy(dam[:], []byte{'1', '0', '0', '0'})
 	config.DomainApplicationMask = dam
@@ -206,7 +209,7 @@ func TestGetSpec(t *testing.T) {
 	require.NoError(t, json.Unmarshal(writer.Body.Bytes(), &resp))
 	data, ok := resp.Data.(map[string]any)
 	require.Equal(t, true, ok)
-	assert.Equal(t, 176, len(data))
+	assert.Equal(t, 177, len(data))
 	for k, v := range data {
 		t.Run(k, func(t *testing.T) {
 			switch k {
@@ -408,6 +411,8 @@ func TestGetSpec(t *testing.T) {
 				assert.Equal(t, "0x30303036", v)
 			case "DOMAIN_AGGREGATE_AND_PROOF":
 				assert.Equal(t, "0x30303037", v)
+			case "DOMAIN_PTC_ATTESTER":
+				assert.Equal(t, "0x30303038", v)
 			case "DOMAIN_APPLICATION_MASK":
 				assert.Equal(t, "0x31303030", v)
 			case "DOMAIN_SYNC_COMMITTEE":
